@@ -1,4 +1,5 @@
-﻿using S22.Xmpp.Core;
+﻿using System.Linq;
+using S22.Xmpp.Core;
 using S22.Xmpp.Im;
 using System;
 using System.Collections.Generic;
@@ -120,7 +121,7 @@ namespace S22.Xmpp.Extensions {
 			: base(im) {
 			// Collect name and version attributes from the assembly's metadata.
 			Attribute attr = Assembly.GetExecutingAssembly().
-				GetCustomAttribute(typeof(AssemblyProductAttribute));
+				GetCustomAttributes(typeof(AssemblyProductAttribute), false).FirstOrDefault() as Attribute;
 			string name = attr != null ? ((AssemblyProductAttribute) attr).Product :
 				"S22.Xmpp";
 			string version = Assembly.GetExecutingAssembly().GetName().

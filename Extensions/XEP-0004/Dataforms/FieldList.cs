@@ -9,7 +9,7 @@ namespace S22.Xmpp.Extensions.Dataforms {
 	/// <summary>
 	/// Represents a list of data-fields contained in a data-form.
 	/// </summary>
-	public class FieldList : IEnumerable<DataField>, IReadOnlyCollection<DataField> {
+	public class FieldList : IEnumerable<DataField> {
 		/// <summary>
 		/// The underlying XML element of the data-form.
 		/// </summary>

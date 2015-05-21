@@ -193,9 +193,9 @@ namespace S22.Xmpp.Extensions {
 		/// instance is created.</param>
 		public ServiceDiscovery(XmppIm im)
 			: base(im) {
-			Attribute attr = Assembly.GetExecutingAssembly().
-				GetCustomAttribute(typeof(AssemblyProductAttribute));
-			string name = attr != null ? ((AssemblyProductAttribute) attr).Product :
+                Attribute attr = Assembly.GetExecutingAssembly().
+                    GetCustomAttributes(typeof(AssemblyProductAttribute), false).FirstOrDefault() as Attribute;
+                string name = attr != null ? ((AssemblyProductAttribute)attr).Product :
 				"S22.Xmpp";
 			Identity = new Identity("client", "pc", name);
 		}
