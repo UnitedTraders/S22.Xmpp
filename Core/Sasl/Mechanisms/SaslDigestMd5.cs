@@ -151,7 +151,7 @@ namespace S22.Xmpp.Core.Sasl.Mechanisms {
 			// Parse the challenge-string and construct the "response-value" from it.
 			string decoded = Encoding.ASCII.GetString(challenge);
 			NameValueCollection fields = ParseDigestChallenge(decoded);
-			string digestUri = "imap/" + fields["realm"];
+			string digestUri = "xmpp/" + fields["realm"];
 			string responseValue = ComputeDigestResponseValue(fields, Cnonce, digestUri,
 				Username, Password);
 
@@ -269,13 +269,23 @@ namespace S22.Xmpp.Core.Sasl.Mechanisms {
 			return "\"" + s + "\"";
 		}
 
-		/// <summary>
-		/// Generates a random cnonce-value which is a "client-specified data string
-		/// which must be different each time a digest-response is sent".
-		/// </summary>
-		/// <returns>A random "cnonce-value" string.</returns>
-		private static string GenerateCnonce() {
-			return Guid.NewGuid().ToString("N").Substring(0, 16);
-		}
+	    /// <summary>
+	    /// Generates a random cnonce-value which is a "client-specified data string
+	    /// which must be different each time a digest-response is sent".
+	    /// </summary>
+	    /// <returns>A random "cnonce-value" string.</returns>
+	    private static string GenerateCnonce()
+	    {
+	        RandomNumberGenerator rng = RandomNumberGenerator.Create();
+
+	        byte[] buf = new byte[32];
+	        rng.GetBytes(buf);
+	        StringBuilder sb = new StringBuilder();
+	        foreach (byte b in buf)
+	        {
+	            sb.Append(b.ToString("x2"));
+	        }
+	        return sb.ToString().ToLower();
+	    }
 	}
 }
